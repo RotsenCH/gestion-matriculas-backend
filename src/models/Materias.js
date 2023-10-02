@@ -14,7 +14,7 @@ Materias.init({
     allowNull: false,
   },
   codigo: {
-    type: DataTypes.STRING(20),
+    type: DataTypes.STRING(36),
     allowNull: false,
   },
   descripcion: {
