@@ -22,7 +22,8 @@ app.use(express.json());
 // Rutas
 app.get('/', (req, res) => {
   res.status(200).json({
-    bienvenida: 'Bienvenido a la API de Gestion de Citas'
+    bienvenida: 'Bienvenido a la API de Gestion de Citas',
+    documentacion: 'https://documenter.getpostman.com/view/27479687/2s9YJc1iJ7'
   });
 });
 

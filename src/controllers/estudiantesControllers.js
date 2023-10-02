@@ -1,7 +1,7 @@
 import Estudiantes from '../models/Estudiantes.js';
 import { Op } from 'sequelize';
 
-// Obtener todos los pacientes
+// Obtener todos los Estudiantes
 const obtenerEstudiantes = async (req, res) => {
   try {
     const estudiantes = await Estudiantes.findAll();
@@ -12,7 +12,7 @@ const obtenerEstudiantes = async (req, res) => {
   }
 };
 
-// Obtener un paciente por ID
+// Obtener un Estudiante por ID
 const obtenerEstudiantePorId = async (req, res) => {
   const { id } = req.params;
   try {
@@ -27,7 +27,7 @@ const obtenerEstudiantePorId = async (req, res) => {
   }
 };
 
-// Crear un nuevo paciente
+// Crear un nuevo Estudiante
 const crearEstudiante = async (req, res) => {
   const { nombre, apellido, cedula, fecha_nacimiento, ciudad, direccion, telefono, email } = req.body;
   // Verifica que no haya campos vacíos
@@ -50,7 +50,7 @@ const crearEstudiante = async (req, res) => {
   }
 };
 
-// Actualizar un paciente por ID
+// Actualizar un Estudiante por ID
 const actualizarEstudiante = async (req, res) => {
   const { id } = req.params;
   const { nombre, apellido, cedula, fecha_nacimiento, ciudad, direccion, telefono, email } = req.body;
@@ -71,7 +71,7 @@ const actualizarEstudiante = async (req, res) => {
     const estudianteExistente = await Estudiantes.findOne({
       where: {
         cedula,
-        id: { [Op.not]: id }, // Excluye al paciente actual por ID
+        id: { [Op.not]: id }, // Excluye al Estudiante actual por ID
       },
     });
 

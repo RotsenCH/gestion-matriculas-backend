@@ -4,7 +4,7 @@ import Materias from '../models/Materias.js';
 import { v4 as uuidv4 } from 'uuid'; // Importa la función uuidv4 de la biblioteca uuid
 import { Op } from 'sequelize';
 
-// Obtener todas las citas
+// Obtener todas las Matriculas
 const obtenerMatriculas = async (req, res) => {
   try {
     const matriculas = await Matriculas.findAll();
@@ -15,7 +15,7 @@ const obtenerMatriculas = async (req, res) => {
   }
 };
 
-// Obtener una cita por ID
+// Obtener una Matricula por ID
 const obtenerMatriculaPorId = async (req, res) => {
   const { id } = req.params;
 
@@ -31,12 +31,12 @@ const obtenerMatriculaPorId = async (req, res) => {
   }
 };
 
-// Crear una nueva cita
+// Crear una nueva Matricula
 const crearMatricula = async (req, res) => {
   const { descripcion, id_estudiante, id_materia } = req.body;
 
   try {
-    // Verificar si el paciente existe
+    // Verificar si el Estudainte existe
     const estudianteExistente = await Estudiantes.findByPk(id_estudiante);
     // Verifica que no haya campos vacíos
     if (!descripcion || !id_estudiante || !id_materiaid_materia) {
@@ -46,7 +46,7 @@ const crearMatricula = async (req, res) => {
       return res.status(400).json({ mensaje: 'El Estudiante no existe' });
     }
 
-    // Verificar si la especialidad existe
+    // Verificar si la Materia existe
     const materiaExistente = await Materias.findByPk(id_materia);
 
     if (!materiaExistente) {
@@ -56,7 +56,7 @@ const crearMatricula = async (req, res) => {
     // Generar un código UUID único
     const codigo = uuidv4();
 
-    // Verificar si la cita ya existe para el mismo paciente y especialidad
+    // Verificar si la Matricula ya existe para el mismo estudiante y materia
     const matriculaExistente = await Matriculas.findOne({
        where: { id_estudiante, id_materia } ,
       });
@@ -76,34 +76,33 @@ const crearMatricula = async (req, res) => {
 
 // ...
 
-// Actualizar una cita por ID
+// Actualizar una Matricula por ID
 const actualizarMatricula = async (req, res) => {
   const { id } = req.params;
   const { descripcion, id_estudiante, id_materia } = req.body;
 
   try {
-    // Verificar si la cita existe
+    // Verificar si la Matricula existe
     const matricula = await Matriculas.findByPk(id);
 
     if (!matricula) {
       return res.status(404).json({ mensaje: 'Matricula no encontrada' });
     }
 
-    // Verificar si el paciente existe
+    // Verificar si el Matricula existe
     const estudianteExistente = await Estudiantes.findByPk(id_estudiante);
 
     if (!estudianteExistente) {
       return res.status(400).json({ mensaje: 'El Estudiante no existe' });
     }
 
-    // Verificar si la especialidad existe
+    // Verificar si la Matricula existe
     const materiaExistente = await Materias.findByPk(id_materia);
 
     if (!materiaExistente) {
       return res.status(400).json({ mensaje: 'La Materia no existe' });
     }
 
-    // Verificar si la cita ya existe para el mismo paciente y especialidad
     const matriculaExistente = await Matriculas.findOne({
        where: { id_estudiante, id_materia } ,
        where: { id: { [Op.not]: id } },
@@ -123,7 +122,7 @@ const actualizarMatricula = async (req, res) => {
   }
 };
 
-// Eliminar una cita por ID
+// Eliminar una Matricula por ID
 const eliminarMatricula = async (req, res) => {
   const { id } = req.params;
 

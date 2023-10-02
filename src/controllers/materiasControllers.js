@@ -1,7 +1,7 @@
 import Materias from '../models/Materias.js';
 import { v4 as uuidv4 } from 'uuid'; // Importa la función uuidv4 de la biblioteca uuid
 import { Op } from 'sequelize';
-// Obtener todas las especialidades
+// Obtener todas las Materias
 const obtenerMaterias = async (req, res) => {
   try {
     const materias = await Materias.findAll();
@@ -12,7 +12,7 @@ const obtenerMaterias = async (req, res) => {
   }
 };
 
-// Obtener una especialidad por ID
+// Obtener una Materia por ID
 const obtenerMateriasPorId = async (req, res) => {
   const { id } = req.params;
 
@@ -28,7 +28,7 @@ const obtenerMateriasPorId = async (req, res) => {
   }
 };
 
-// Crear una nueva especialidad
+// Crear una nueva Materia
 const crearMaterias = async (req, res) => {
   const { nombre, descripcion, creditos } = req.body;
 
@@ -37,7 +37,7 @@ const crearMaterias = async (req, res) => {
       return res.status(400).json({ mensaje: 'Por favor, complete todos los campos' });
     }
 
-    // Verificar si la especialidad ya existe por nombre
+    // Verificar si la Materia ya existe por nombre
     const materiaExistente = await Materias.findOne({ where: { nombre } });
 
     if (materiaExistente) {
@@ -56,7 +56,7 @@ const crearMaterias = async (req, res) => {
   }
 };
 
-// Actualizar una especialidad por ID
+// Actualizar una Materia por ID
 const actualizarMateria = async (req, res) => {
   const { id } = req.params;
   const { nombre, descripcion, creditos } = req.body;
@@ -72,10 +72,10 @@ const actualizarMateria = async (req, res) => {
       return res.status(404).json({ mensaje: 'Materia no encontrada' });
     }
 
-    // Verificar si la especialidad ya existe por nombre
+    // Verificar si la Materia ya existe por nombre
     const materiaExistente = await Materias.findOne({
       where: { nombre },
-      // Excluye la especialidad actual por ID para permitir la actualización
+      // Excluye la Materia actual por ID para permitir la actualización
       where: { id: { [Op.not]: id } },
     });
 
@@ -92,7 +92,7 @@ const actualizarMateria = async (req, res) => {
   }
 };
 
-// Eliminar una especialidad por ID
+// Eliminar una Materia por ID
 const eliminarMateria = async (req, res) => {
   const { id } = req.params;
 
