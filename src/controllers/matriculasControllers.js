@@ -2,6 +2,7 @@ import Matriculas from '../models/Matriculas.js';
 import Estudiantes from '../models/Estudiantes.js';
 import Materias from '../models/Materias.js';
 import { v4 as uuidv4 } from 'uuid'; // Importa la función uuidv4 de la biblioteca uuid
+import { Op } from 'sequelize';
 
 // Obtener todas las citas
 const obtenerMatriculas = async (req, res) => {
@@ -56,7 +57,10 @@ const crearMatricula = async (req, res) => {
     const codigo = uuidv4();
 
     // Verificar si la cita ya existe para el mismo paciente y especialidad
-    const matriculaExistente = await Matriculas.findOne({ where: { id_estudiante, id_materia } });
+    const matriculaExistente = await Matriculas.findOne({
+       where: { id_estudiante, id_materia } ,
+       where: { id: { [Op.not]: id } },
+      });
 
     if (matriculaExistente) {
       return res.status(400).json({ mensaje: 'La Matricula ya está registrada para este estudiante y materia' });
@@ -98,6 +102,13 @@ const actualizarMatricula = async (req, res) => {
 
     if (!materiaExistente) {
       return res.status(400).json({ mensaje: 'La Materia no existe' });
+    }
+
+    // Verificar si la cita ya existe para el mismo paciente y especialidad
+    const matriculaExistente = await Matriculas.findOne({ where: { id_estudiante, id_materia } });
+
+    if (matriculaExistente) {
+      return res.status(400).json({ mensaje: 'La Matricula ya está registrada para este estudiante y materia' });
     }
 
     // Actualizar la cita
