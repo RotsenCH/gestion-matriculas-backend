@@ -41,7 +41,7 @@ const crearEstudiante = async (req, res) => {
       return res.status(400).json({ mensaje: 'El Estudiante ya está registrado' });
     }
 
-    const nuevoEstudiante = await Estudiantes.create({ nombre, apellido, cedula, fecha_nacimiento, genero, ciudad, direccion, telefono, email });
+    const nuevoEstudiante = await Estudiantes.create({ nombre, apellido, cedula, fecha_nacimiento, ciudad, direccion, telefono, email });
 
     res.status(201).json({ mensaje: 'Estudiante registrado con éxito' });
   } catch (error) {
