@@ -59,7 +59,6 @@ const crearMatricula = async (req, res) => {
     // Verificar si la cita ya existe para el mismo paciente y especialidad
     const matriculaExistente = await Matriculas.findOne({
        where: { id_estudiante, id_materia } ,
-       where: { id: { [Op.not]: id } },
       });
 
     if (matriculaExistente) {
@@ -105,7 +104,10 @@ const actualizarMatricula = async (req, res) => {
     }
 
     // Verificar si la cita ya existe para el mismo paciente y especialidad
-    const matriculaExistente = await Matriculas.findOne({ where: { id_estudiante, id_materia } });
+    const matriculaExistente = await Matriculas.findOne({
+       where: { id_estudiante, id_materia } ,
+       where: { id: { [Op.not]: id } },
+      });
 
     if (matriculaExistente) {
       return res.status(400).json({ mensaje: 'La Matricula ya está registrada para este estudiante y materia' });
