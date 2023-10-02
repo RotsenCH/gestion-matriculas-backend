@@ -1,6 +1,6 @@
 import Materias from '../models/Materias.js';
 import { v4 as uuidv4 } from 'uuid'; // Importa la función uuidv4 de la biblioteca uuid
-
+import { Op } from 'sequelize';
 // Obtener todas las especialidades
 const obtenerMaterias = async (req, res) => {
   try {
